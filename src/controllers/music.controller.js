@@ -6,7 +6,7 @@ const albumModel = require("../models/album.model")
 
 
 async function createMusic(req, res) {
-    let decoded;
+
     const title = req.body.title;
     const file = req.file;
 
@@ -59,7 +59,11 @@ async function createAlbum(req, res) {
 }
 
 async function getAllMusic(req, res) {
-    const musics = await musicModel.find().populate("artist");
+    const musics = await musicModel
+        .find()
+        .skip(0)
+        .populate("artist")
+        .limit(1);
 
     res.status(200).json({
         msg: "musics fetched",
